@@ -27,3 +27,21 @@ cpf_paciente bigint primary key,
 codigo_cid int,
 foreign key(codigo_cid) references patologias(codigo_cid)
 );
+
+create table atende (
+ID_funcionario int,
+cpf_paciente int,
+primary key (ID_funcionario, cpf_paciente),
+foreign key(ID_funcionario) references funcionario(ID_funcionario),
+foreign key(cpf_paciente) references paciente(cpf_paciente)
+); 
+
+create table possui (
+cpf_paciente bigint,
+codigo_cid int,
+primary key (cpf_paciente, codigo_cid),
+foreign key(cpf_paciente) references paciente(cpf_paciente),
+foreign key(codigo_cid) references patologias(codigo_cid)
+);
+
+show tables;
