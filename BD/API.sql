@@ -31,3 +31,14 @@ CREATE TABLE paciente (
     FOREIGN KEY(codigo_cid) REFERENCES patologias(codigo_cid),
     FOREIGN KEY(id_medico) REFERENCES funcionario(id_funcionario)
 );
+
+CREATE TABLE ficha_paciente (
+    id_ficha INT AUTO_INCREMENT,
+    cpf_paciente VARCHAR(11),
+    id_funcionario INT,
+    observacoes TEXT,
+    data_hora DATETIME DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id_ficha),
+    FOREIGN KEY (cpf_paciente) REFERENCES paciente(cpf_paciente),
+    FOREIGN KEY (id_funcionario) REFERENCES funcionario(id_funcionario)
+);
