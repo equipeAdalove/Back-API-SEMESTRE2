@@ -15,3 +15,19 @@ CREATE TABLE funcionario (
     cargo VARCHAR(50), 
     crm VARCHAR(15), Para médicos (não obrigatório)
 );
+
+CREATE TABLE patologias (
+    codigo_cid VARCHAR(10) PRIMARY KEY,
+    grau INT,
+    nome VARCHAR(100)
+);
+
+CREATE TABLE paciente (
+    nome VARCHAR(100),
+    sexo CHAR(1),
+    cpf_paciente VARCHAR(11) PRIMARY KEY,
+    codigo_cid VARCHAR(10), -- Paciente vinculado à patologia
+    id_medico INT, -- Médico (não obrigatoriamente vinculado ao paciente)
+    FOREIGN KEY(codigo_cid) REFERENCES patologias(codigo_cid),
+    FOREIGN KEY(id_medico) REFERENCES funcionario(id_funcionario)
+);
