@@ -1,6 +1,6 @@
-package org.example.model.DAO;
+package com.adalove.api.model.dao;
 
-import org.example.model.entities.Funcionario;
+import com.adalove.api.model.entities.Funcionario;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -22,13 +22,14 @@ public class FuncionarioDAO {
 
     public List<Funcionario> read() {
         List<Funcionario> funcionarios = new ArrayList<>();
-        String sql = "SELECT nome, cargo, crm FROM funcionario";
+        String sql = "SELECT id_funcionario, nome, cargo, crm FROM funcionario";
         try (Connection conn = ConnectionFactory.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
                 Funcionario funcionario = new Funcionario(
+                        rs.getInt("id_funcionario"),
                         rs.getString("nome"),
                         rs.getString("cargo"),
                         rs.getString("crm")
@@ -40,6 +41,34 @@ public class FuncionarioDAO {
         }
         return funcionarios;
     }
+
+    public List<Funcionario> buscarPorNome(String nome) {
+        List<Funcionario> funcionarios = new ArrayList<>();
+        String query = "SELECT id_funcionario, nome, cargo, crm FROM funcionario WHERE nome LIKE ?";
+
+        try (Connection conn = ConnectionFactory.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, "%" + nome + "%");
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Funcionario funcionario = new Funcionario(
+                        rs.getInt("id_funcionario"),
+                        rs.getString("nome"),
+                        rs.getString("cargo"),
+                        rs.getString("crm")
+                );
+                funcionarios.add(funcionario);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return funcionarios;
+    }
+
+
 
     public void update(Funcionario funcionario, int id) {
         String query = "update funcionario set nome = ?, cargo = ?, crm = ? WHERE id_funcionario = ?";

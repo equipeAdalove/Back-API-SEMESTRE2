@@ -1,6 +1,8 @@
-package org.example.model.DAO;
+package com.adalove.api.model.dao;
 
-import org.example.model.entities.Paciente;
+
+
+import com.adalove.api.model.entities.Paciente;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -44,6 +46,84 @@ public class PacienteDAO {
         }
         return pacientes;
     }
+
+    public String buscarNomePorCPF(String cpf) {
+        String nomePaciente = null;
+        String query = "SELECT nome FROM Paciente WHERE cpf_paciente = ?";
+
+        try (Connection conn = ConnectionFactory.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, cpf);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                nomePaciente = rs.getString("nome");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return nomePaciente;
+    }
+
+    public Paciente buscarPorCpf(String cpf) {
+        Paciente paciente = null;
+        String query = "SELECT nome, sexo, cpf_paciente, codigo_cid, id_medico FROM Paciente WHERE cpf_paciente = ?";
+
+        try (Connection conn = ConnectionFactory.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, cpf);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                // Obtém os dados do paciente do ResultSet
+                String nome = rs.getString("nome");
+                String sexo = rs.getString("sexo");
+                String cpfPaciente = rs.getString("cpf_paciente");
+                String codigoCid = rs.getString("codigo_cid");
+                int idMedico = rs.getInt("id_medico");
+
+                // Cria o objeto Paciente
+                paciente = new Paciente(nome, sexo, cpfPaciente, codigoCid, idMedico);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return paciente;
+    }
+
+    public List<Paciente> buscarPorNome(String nome) {
+        List<Paciente> pacientes = new ArrayList<>();
+        String query = "SELECT nome, sexo, cpf_paciente, codigo_cid, id_medico FROM paciente WHERE nome LIKE ?";
+
+        try (Connection conn = ConnectionFactory.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, "%" + nome + "%");
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Paciente paciente = new Paciente(
+                        rs.getString("nome"),
+                        rs.getString("sexo"),
+                        rs.getString("cpf_paciente"),
+                        rs.getString("codigo_cid"),
+                        rs.getInt("id_medico")
+                );
+                pacientes.add(paciente);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return pacientes;
+    }
+
+
+
 
     public void update(Paciente paciente) {
         String query = "update paciente set nome = ?, sexo = ? WHERE cpf_paciente = ?";

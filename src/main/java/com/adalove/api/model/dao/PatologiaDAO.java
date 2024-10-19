@@ -1,6 +1,6 @@
-package org.example.model.DAO;
+package com.adalove.api.model.dao;
 
-import org.example.model.entities.Patologia;
+import com.adalove.api.model.entities.Patologia;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -41,6 +41,32 @@ public class PatologiaDAO {
         return patologias;
     }
 
+    public List<Patologia> buscarPorNome(String nome) {
+        List<Patologia> patologias = new ArrayList<>();
+        String query = "SELECT codigo_cid, grau, nome FROM patologias WHERE nome LIKE ?";
+
+        try (Connection conn = ConnectionFactory.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, "%" + nome + "%");
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Patologia patologia = new Patologia(
+                        rs.getString("codigo_cid"),
+                        rs.getInt("grau"),
+                        rs.getString("nome")
+                );
+                patologias.add(patologia);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return patologias;
+    }
+
+
     public void update(Patologia patologia) {
         String query = "update patologias set grau = ?, nome = ? WHERE codigo_cid = ?";
         try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement ps = conn.prepareStatement(query)) {
@@ -52,11 +78,11 @@ public class PatologiaDAO {
             throw new RuntimeException(e);
         }
     }
-    
-    public void delete(int cid) {
+
+    public void delete(String cid) { // Altere o tipo para String
         String query = "DELETE FROM patologias WHERE codigo_cid = ?";
         try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement ps = conn.prepareStatement(query)) {
-            ps.setInt(1, cid);
+            ps.setString(1, cid); // Usar setString, já que cid é uma String
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);

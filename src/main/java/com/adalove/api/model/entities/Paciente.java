@@ -1,4 +1,4 @@
-package org.example.model.entities;
+package com.adalove.api.model.entities;
 
 public class Paciente {
 

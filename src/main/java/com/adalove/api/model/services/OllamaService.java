@@ -27,13 +27,15 @@ public class OllamaService {
                         .addLine("Please extract the following information from the document:")
                         .addSeparator()
                         .addLine("At the top of the page, below the title \"Clinical Identification Form\":")
-                        .addLine("Extract the name and CPF (which is similar to an ID and has eleven numbers) from the fields \"Name:\" and \"CPF:\".")
+                        .addLine("Extract **only** the value (without labels) from the fields \"Name:\" and \"CPF:\" (CPF is similar to an ID and has eleven numbers).")
                         .addSeparator()
                         .addLine("Now, near the middle of the page, below the underlined text \"Psychological Anamnesis\":")
-                        .addLine("Extract the patient observations from the field \"Observations:\".")
+                        .addLine("Extract **only** the value (without labels) from the field \"Observations:\".")
                         .addSeparator()
                         .addLine("Now return ONLY the 3 answers separated by commas, each answer must be enclosed in double quotes, as follows: \"name\", \"cpf\", \"observations\".")
+                        .addLine("Make sure that you only return the extracted values, without any additional text or labels.")
                         .addLine("Follow the commands above strictly, step by step.");
+
 
 
 

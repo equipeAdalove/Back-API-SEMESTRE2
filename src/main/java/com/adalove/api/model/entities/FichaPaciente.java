@@ -1,4 +1,7 @@
-package org.example.model.entities;
+package com.adalove.api.model.entities;
+
+import java.sql.Date;
+import java.time.LocalDateTime;
 
 public class FichaPaciente {
 
@@ -6,12 +9,21 @@ public class FichaPaciente {
     private String cpfPaciente;
     private int idFuncionario;
     private String observacoes;
+    private LocalDateTime dataHora;
 
-    public FichaPaciente(int id, String cpfPaciente, int idFuncionario, String observacoes) {
+    public FichaPaciente(int id, String cpfPaciente, int idFuncionario, String observacoes, LocalDateTime dataHora) {
         this.id = id;
         this.cpfPaciente = cpfPaciente;
         this.idFuncionario = idFuncionario;
         this.observacoes = observacoes;
+        this.dataHora = dataHora;
+    }
+
+    public FichaPaciente(String cpfPaciente, int idFuncionario, String observacoes, LocalDateTime dataHora) {
+        this.cpfPaciente = cpfPaciente;
+        this.idFuncionario = idFuncionario;
+        this.observacoes = observacoes;
+        this.dataHora = dataHora;
     }
 
     public int getId() {
@@ -45,5 +57,12 @@ public class FichaPaciente {
     public void setObservacoes(String observacoes) {
         this.observacoes = observacoes;
     }
-}
 
+    public LocalDateTime getDataHora() {
+        return dataHora;
+    }
+
+    public void setDataHora(LocalDateTime dataHora) {
+        this.dataHora = dataHora;
+    }
+}
