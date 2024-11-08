@@ -8,17 +8,14 @@ import io.github.ollama4j.utils.PromptBuilder;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.SQLOutput;
 import java.util.List;
 
 public class OllamaService {
 
-    public String getOllamaResponse(String imagePath) throws OllamaBaseException, IOException, InterruptedException {
+    public String getOllamaResponse(String imagePath, String model) throws OllamaBaseException, IOException, InterruptedException {
         String host = "http://localhost:11434/";
-        String model = "minicpm-v:latest";
         OllamaAPI ollamaAPI = new OllamaAPI(host);
         ollamaAPI.setRequestTimeoutSeconds(400);
-
 
         PromptBuilder buildMsg =
                 new PromptBuilder()
@@ -36,9 +33,6 @@ public class OllamaService {
                         .addLine("Make sure that you only return the extracted values, without any additional text or labels.")
                         .addLine("Follow the commands above strictly, step by step.");
 
-
-
-
         OllamaResult result = ollamaAPI.generateWithImageFiles(model,
                 buildMsg.build(),
                 List.of(new File(imagePath)),
@@ -49,5 +43,3 @@ public class OllamaService {
         return result.getResponse();
     }
 }
-
-
