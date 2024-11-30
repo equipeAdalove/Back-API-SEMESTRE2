@@ -1,6 +1,7 @@
 package com.adalove.api.model.dao;
 
 import com.adalove.api.model.entities.Funcionario;
+import com.adalove.api.model.factory.ConnectionFactory;
 
 import java.sql.*;
 import java.util.ArrayList;

@@ -6,7 +6,6 @@ import javafx.stage.Stage;
 import java.io.File;
 
 public class ImagePicker {
-    private File selectedFile;
 
 
     public String getImagePath() {
@@ -16,7 +15,7 @@ public class ImagePicker {
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.tiff")
         );
-        selectedFile = fileChooser.showOpenDialog(new Stage());
+        File selectedFile = fileChooser.showOpenDialog(new Stage());
 
         if (selectedFile != null) {
             return selectedFile.getAbsolutePath();

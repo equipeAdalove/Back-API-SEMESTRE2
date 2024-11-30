@@ -36,3 +36,6 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+###Configuracao do Banco de Dados###
+db_config.properties

@@ -3,12 +3,14 @@ package com.adalove.api.model.dao;
 
 
 import com.adalove.api.model.entities.Paciente;
+import com.adalove.api.model.factory.ConnectionFactory;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PacienteDAO {
+
 
     public void create(Paciente paciente) {
         String query = "INSERT INTO paciente (nome, sexo, cpf_paciente, codigo_cid, id_medico) VALUES (?, ?, ?, ?, ?)";

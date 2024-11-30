@@ -1,7 +1,7 @@
 package com.adalove.api.model.dao;
 
-import com.adalove.api.model.entities.Patologia;
 import com.adalove.api.model.entities.Usuario;
+import com.adalove.api.model.factory.ConnectionFactory;
 import com.adalove.api.model.services.PasswordUtil;
 
 import java.sql.Connection;

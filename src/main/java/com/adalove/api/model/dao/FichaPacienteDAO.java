@@ -1,11 +1,14 @@
 package com.adalove.api.model.dao;
 
 import com.adalove.api.model.entities.FichaPaciente;
+import com.adalove.api.model.factory.ConnectionFactory;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class FichaPacienteDAO {
+
 
     public void create(FichaPaciente fichaPaciente) {
         String query = "INSERT INTO ficha_paciente (cpf_paciente, id_funcionario, observacoes, data_hora) VALUES (?, ?, ?, NOW())";
